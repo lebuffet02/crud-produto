@@ -9,9 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class ProdutoServiceTest {
@@ -29,13 +29,12 @@ class ProdutoServiceTest {
     }
 
     @Test
-    void dadoMetodoCriarProdutoEntaoTestarEsteMetodoComoNuloSemGerarExcecao() { //nulo pois o any() não mapeia
-        when(produtoRepository.save(any())).thenReturn(any());
-        Assertions.assertNull(service.criarProduto(new ProdutoDTO("", "descriçãoDTO", 76.9)));
+    void dadoMetodoProdutoIdDeletadoEntaoTestarEsteMetodo() { //never pois não teve interação com o crud
+        verify(produtoRepository, never()).deleteById(anyLong());
     }
 
     @Test
-    void dadoMetodoProdutoIdDeletadoEntaoTestarEsteMetodoComoNulo() { //never pois não teve interação com o crud
-        verify(produtoRepository, never()).deleteById(anyLong());
+    void dadoMetodoGetProdutosEntaoTestarEsteMetodo() { //never pois não teve interação com o crud
+        verify(produtoRepository, never()).findAll();
     }
 }

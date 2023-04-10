@@ -1,5 +1,6 @@
 package com.example.project.crud.api.db.entity;
 
+
 import javax.persistence.*;
 import java.io.Serializable;
 

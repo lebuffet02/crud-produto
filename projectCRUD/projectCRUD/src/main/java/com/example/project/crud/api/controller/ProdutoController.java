@@ -9,12 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/produtos")
+@RequestMapping(path = "produtos")
 public class ProdutoController {
 
     @Autowired
@@ -24,39 +23,49 @@ public class ProdutoController {
     @Operation(summary = "Endpoint para criar um produto através de um DTO")
     @RequestMapping(path = "/criar-produto", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Produto> criarProduto(
-            @RequestBody (required = false) ProdutoDTO produtoDTO
+            @RequestBody ProdutoDTO produtoDTO
     ) {
-        Produto produto = produtoService.criarProduto(produtoDTO);
-        return ResponseEntity.ok(produto);
+        return ResponseEntity.ok(produtoService.criarProduto(produtoDTO));
     }
 
 
     @Operation(summary = "Endpoint para listar todos os produtos presentes")
-    @RequestMapping(value = "/lista-produtos", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/lista-produtos", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Produto>> listaProdutos() {
-        List<Produto> produtos = produtoService.getProdutos();
-        return ResponseEntity.ok(produtos);
+        return ResponseEntity.ok(produtoService.getProdutos());
     }
 
 
     @Operation(summary = "Endpoint para listar um produto específico")
-    @RequestMapping(value = "/lista-produto/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/lista-produto/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Produto> getProdutoId(
             @PathVariable(name = "id") Long id
     ) {
         Optional<Produto> produtoId = produtoService.getProdutoId(id);
-        return produtoId.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        if (produtoId.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+    @Operation(summary = "Endpoint para atualizar um produto específico")
+    @RequestMapping(path = "/atualiza-produto/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> atualizaProduto(
+            @PathVariable (name = "id") Long id,
+            @RequestBody Produto produto
+    ) {
+        produtoService.atualizaProduto(id, produto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
     @Operation(summary = "Endpoint para deletar um produto específico")
-    @RequestMapping(value = "/deleta-produto/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> produtoIdDeletado(
+    @RequestMapping(path = "/deleta-produto/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> produtoIdDeletado(
             @PathVariable(name = "id") Long id
     ) {
-        if (produtoService.produtoIdDeletado(id)) {
-            return ResponseEntity.ok(produtoService.produtoIdDeletado(id));
-        }
-        return new ResponseEntity<>(HttpStatus.valueOf("Id não excluído!"));
+        produtoService.produtoIdDeletado(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

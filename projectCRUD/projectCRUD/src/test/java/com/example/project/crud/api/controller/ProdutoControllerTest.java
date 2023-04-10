@@ -43,6 +43,13 @@ class ProdutoControllerTest {
     }
 
     @Test
+    void dadoQueExisteUmEndpointParaAtualizarUmProdutoExistenteEntaoTestarQueOcorreUmaChamadaDesteEnpoint() {
+        Produto produto = getProduto();
+        controller.atualizaProduto(1L, produto);
+        Mockito.verify(produtoService, Mockito.times(1)).atualizaProduto(1L, produto);
+    }
+
+    @Test
     void dadoQueExisteUmEndpointParaDeletarUmProdutoExistenteEntaoTestarQueOcorreUmaChamadaDesteEnpoint() {
         controller.produtoIdDeletado(1L);
         Mockito.verify(produtoService, Mockito.times(1)).produtoIdDeletado(1L);
