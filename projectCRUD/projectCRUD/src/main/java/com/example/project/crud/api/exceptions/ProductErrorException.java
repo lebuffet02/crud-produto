@@ -13,8 +13,4 @@ public class ProductErrorException extends RuntimeException {
     public ProductErrorException(String mensagem, Throwable ex) {
         super(mensagem, ex);
     }
-
-    public ProductErrorException(Throwable ex) {
-        super(ex);
-    }
 }

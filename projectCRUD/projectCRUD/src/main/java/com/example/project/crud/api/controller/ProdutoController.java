@@ -24,8 +24,9 @@ public class ProdutoController {
     @ApiOperation(value = "Endpoint para criar um produto",
         response = ProdutoEntity.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 400, message = "produto não inserido corretamente"),
-            @ApiResponse(code = 404, message = "erro ao criar um produto")
+            @ApiResponse(code = 200, message = "SUCESSO"),
+            @ApiResponse(code = 400, message = "Produto não inserido corretamente"),
+            @ApiResponse(code = 404, message = "Erro ao criar um produto")
     })
     @RequestMapping(path = "/criar-produto", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProdutoEntity> criarProduto (
@@ -38,8 +39,9 @@ public class ProdutoController {
     @ApiOperation(value = "Endpoint para listar todos os produtos presentes",
             response = ProdutoEntity.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 400, message = "lista de produtos não encontrada"),
-            @ApiResponse(code = 404, message = "erro ao buscar lista de produtos")
+            @ApiResponse(code = 200, message = "SUCESSO"),
+            @ApiResponse(code = 400, message = "Lista de produtos não encontrada"),
+            @ApiResponse(code = 404, message = "Erro ao buscar lista de produtos")
     })
     @RequestMapping(path = "/lista-produtos", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ProdutoEntity>> listaProdutos() {
@@ -50,8 +52,9 @@ public class ProdutoController {
     @ApiOperation(value = "Endpoint para listar um produto específico",
             response = ProdutoEntity.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 400, message = "id do produto não buscado corretamente"),
-            @ApiResponse(code = 404, message = "erro ao buscar o produto pelo seu id")
+            @ApiResponse(code = 200, message = "SUCESSO"),
+            @ApiResponse(code = 400, message = "Id do produto não buscado corretamente"),
+            @ApiResponse(code = 404, message = "Erro ao buscar o produto pelo seu id")
     })
     @RequestMapping(path = "/lista-produto/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProdutoEntity> getProdutoId (
@@ -68,8 +71,9 @@ public class ProdutoController {
     @ApiOperation(value = "Endpoint para atualizar um produto específico",
             response = ProdutoEntity.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 400, message = "id do produto não foi atualizado corretamente"),
-            @ApiResponse(code = 404, message = "erro ao atualizar o produto")
+            @ApiResponse(code = 200, message = "SUCESSO"),
+            @ApiResponse(code = 400, message = "Id do produto não foi atualizado corretamente"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar o produto")
     })
     @RequestMapping(path = "/atualiza-produto/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> atualizaProduto (
@@ -84,8 +88,9 @@ public class ProdutoController {
     @ApiOperation(value = "Endpoint para deletar um produto específico",
             response = ProdutoEntity.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 400, message = "id do produto não foi deletado"),
-            @ApiResponse(code = 404, message = "erro ao deletar o produto")
+            @ApiResponse(code = 200, message = "SUCESSO"),
+            @ApiResponse(code = 400, message = "Id do produto não foi deletado"),
+            @ApiResponse(code = 404, message = "Erro ao deletar o produto")
     })
     @RequestMapping(path = "/deleta-produto/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> produtoIdDeletado (

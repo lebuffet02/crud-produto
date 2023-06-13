@@ -45,7 +45,7 @@ public class Swagger {
         return new ArrayList<>() {{
             add(new ResponseMessageBuilder()
                     .code(500)
-                    .message("500 message")
+                    .message("500 Erro Interno")
                     .build());
             add(new ResponseMessageBuilder()
                     .code(403)
