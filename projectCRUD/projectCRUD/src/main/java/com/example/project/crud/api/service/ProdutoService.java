@@ -1,19 +1,19 @@
 package com.example.project.crud.api.service;
 
-import com.example.project.crud.api.db.entity.Produto;
+import com.example.project.crud.api.db.entity.ProdutoEntity;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ProdutoService {
 
-    Produto criarProduto(Produto produto);
+    ProdutoEntity criarProduto(ProdutoEntity produtoEntity);
 
-    List<Produto> getProdutos();
+    List<ProdutoEntity> getProdutos();
 
-    Optional<Produto> getProdutoId(Long id);
+    Optional<ProdutoEntity> getProdutoId(String id);
 
-    void atualizaProduto(Long id, Produto produto);
+    void atualizaProduto(String id, ProdutoEntity produtoEntity);
 
-    void produtoIdDeletado(Long id);
+    void produtoIdDeletado(String id);
 }

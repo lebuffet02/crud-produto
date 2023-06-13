@@ -1,9 +1,8 @@
 package com.example.project.crud.api.service;
 
-import com.example.project.crud.api.exceptions.ErrorException;
-import com.example.project.crud.api.db.entity.Produto;
+import com.example.project.crud.api.exceptions.ProductErrorException;
+import com.example.project.crud.api.db.entity.ProdutoEntity;
 import com.example.project.crud.api.db.repository.ProdutoRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,84 +10,58 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Slf4j
 public class ProdutoImpl implements ProdutoService {
 
     @Autowired
     ProdutoRepository produtoRepository;
 
-    private ObjectMapper mapper;
-
 
     @Override
-    public Produto criarProduto(Produto produto) {
+    public ProdutoEntity criarProduto(ProdutoEntity produtoEntity) {
         try {
-            return produtoRepository.save(produto);
-        } catch (ErrorException e) {
-            throw new RuntimeException();
+            return produtoRepository.save(produtoEntity);
+        } catch (ProductErrorException e) {
+            throw new ProductErrorException("erro ao criar o produto", e);
         }
     }
 
     @Override
-    public List<Produto> getProdutos() {
+    public List<ProdutoEntity> getProdutos() {
         try {
             return produtoRepository.findAll();
-        } catch (ErrorException e) {
-            throw new RuntimeException();
+        } catch (ProductErrorException e) {
+            throw new ProductErrorException("erro ao listar os produtos", e);
         }
     }
 
     @Override
-    public Optional<Produto> getProdutoId(Long id) {
+    public Optional<ProdutoEntity> getProdutoId(String id) {
         try {
             return produtoRepository.findById(id);
-        } catch (ErrorException e) {
-            throw new RuntimeException();
+        } catch (ProductErrorException e) {
+            throw new ProductErrorException("erro ao pegar o produto", e);
         }
     }
 
     @Override
-    public void atualizaProduto(Long id, Produto produto) {
+    public void atualizaProduto(String id, ProdutoEntity produtoEntity) {
         try {
             if (produtoRepository.existsById(id)) {
-                log.info("Atualizando produto...");
-                produtoRepository.save(produto);
+                produtoRepository.save(produtoEntity);
             }
-            log.info("Não foi possível atualizar");
-        } catch (ErrorException e) {
-            throw new RuntimeException();
+        } catch (ProductErrorException e) {
+            throw new ProductErrorException("erro ao atualizar o produto", e);
         }
     }
 
     @Override
-    public void produtoIdDeletado(Long id) {
+    public void produtoIdDeletado(String id) {
         try {
-            if (!produtoRepository.existsById(id)) {
-                log.info("Não foi possível deletar");
+            if (produtoRepository.existsById(id)) {
+                produtoRepository.deleteById(id);
             }
-            log.info("Deletando produto...");
-            produtoRepository.deleteById(id);
-
-        } catch (ErrorException e) {
-            throw new RuntimeException();
+        } catch (ProductErrorException e) {
+            throw new ProductErrorException("erro ao deletar o produto", e);
         }
     }
-
-
-//    private Produto setProduto(ProdutoDTO produtoDTO) {
-//        Produto produto = converteParaProduto(produtoDTO);
-//        produto.setNome(produtoDTO.getNome());
-//        produto.setDescricao(produtoDTO.getDescricao());
-//        produto.setPreco(produtoDTO.getPreco());
-//        return produto;
-//    }
-//
-//    private Produto converteParaProduto(ProdutoDTO produtoDTO) {
-//        return this.mapper.convertValue(produtoDTO, Produto.class);
-//    }
-//
-//    private ProdutoDTO convertParaDTO(Produto produto) {
-//        return this.mapper.convertValue(produto, ProdutoDTO.class);
-//    }
-
 }
