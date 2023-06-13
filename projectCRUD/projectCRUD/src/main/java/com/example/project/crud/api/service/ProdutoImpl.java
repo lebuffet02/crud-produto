@@ -1,6 +1,6 @@
 package com.example.project.crud.api.service;
 
-import com.example.project.crud.api.config.exceptions.LogicaInvalida;
+import com.example.project.crud.api.exceptions.ErrorException;
 import com.example.project.crud.api.db.entity.Produto;
 import com.example.project.crud.api.db.repository.ProdutoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +24,7 @@ public class ProdutoImpl implements ProdutoService {
     public Produto criarProduto(Produto produto) {
         try {
             return produtoRepository.save(produto);
-        } catch (LogicaInvalida e) {
+        } catch (ErrorException e) {
             throw new RuntimeException();
         }
     }
@@ -33,7 +33,7 @@ public class ProdutoImpl implements ProdutoService {
     public List<Produto> getProdutos() {
         try {
             return produtoRepository.findAll();
-        } catch (LogicaInvalida e) {
+        } catch (ErrorException e) {
             throw new RuntimeException();
         }
     }
@@ -42,7 +42,7 @@ public class ProdutoImpl implements ProdutoService {
     public Optional<Produto> getProdutoId(Long id) {
         try {
             return produtoRepository.findById(id);
-        } catch (LogicaInvalida e) {
+        } catch (ErrorException e) {
             throw new RuntimeException();
         }
     }
@@ -55,7 +55,7 @@ public class ProdutoImpl implements ProdutoService {
                 produtoRepository.save(produto);
             }
             log.info("Não foi possível atualizar");
-        } catch (LogicaInvalida e) {
+        } catch (ErrorException e) {
             throw new RuntimeException();
         }
     }
@@ -69,7 +69,7 @@ public class ProdutoImpl implements ProdutoService {
             log.info("Deletando produto...");
             produtoRepository.deleteById(id);
 
-        } catch (LogicaInvalida e) {
+        } catch (ErrorException e) {
             throw new RuntimeException();
         }
     }

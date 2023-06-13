@@ -30,7 +30,7 @@ public class Swagger {
     String versao;
 
     @Bean
-    public Docket detalheApi() {    //http://localhost:8091/swagger-ui.html#/
+    public Docket detalheApi() {   //http://localhost:8091/swagger-ui.html#/
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
@@ -42,7 +42,7 @@ public class Swagger {
     }
 
     private List<ResponseMessage> responseMessages() {
-        return new ArrayList<ResponseMessage>() {{
+        return new ArrayList<>() {{
             add(new ResponseMessageBuilder()
                     .code(500)
                     .message("500 message")
@@ -56,12 +56,9 @@ public class Swagger {
 
     private ApiInfo informacoesApi() {
         return new ApiInfoBuilder()
-                .contact(new Contact("GRUPO-2", "", ""))
                 .title(this.nome)
                 .description(this.descricao)
                 .version(this.versao)
                 .build();
     }
-
-
 }
