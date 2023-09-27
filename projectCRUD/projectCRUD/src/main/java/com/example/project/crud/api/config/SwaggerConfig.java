@@ -1,0 +1,22 @@
+package com.example.project.crud.api.config;
+
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+@OpenAPIDefinition(info = @Info(
+        title = "Crud Produtos",
+        description = "Pequeno crud para inserção de produtos",
+        version = "1.0",
+        contact = @Contact(
+                name = "Lucas Buffet",
+                email = "lebuffet02@gmail.com"
+        ),
+        license = @License(
+                name = "Apache 2.0"))
+)
+public class SwaggerConfig implements WebMvcConfigurer {}

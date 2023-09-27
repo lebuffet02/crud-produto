@@ -4,17 +4,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
-@EntityScan(basePackages = "com.example.project.crud.api.db.entity")
-@EnableJpaRepositories(basePackages = "com.example.project.crud.api.db.repository")
-@EnableSwagger2
+@EnableWebMvc
+@EntityScan(basePackages = "com.example.project.crud.entity")
+@EnableJpaRepositories(basePackages = "com.example.project.crud.repository")
 public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication application = new SpringApplication(Application.class);
 		application.run(args);
-		System.out.println("SUBIU ----------------------- SUBIU ----------------------- SUBIU ");
 	}
 }

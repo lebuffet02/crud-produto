@@ -1,10 +1,11 @@
 package com.example.project.crud.api.controller;
 
-import com.example.project.crud.api.db.entity.ProdutoEntity;
+import com.example.project.crud.entity.ProdutoEntity;
 import com.example.project.crud.api.service.ProdutoImpl;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,51 +15,54 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/produtos")
+@RequestMapping(path = "api/produtos", produces = {MediaType.APPLICATION_JSON_VALUE})
+@Tag(name = "ProdutoController", description = "crud de produtos")
 public class ProdutoController {
 
     @Autowired
     ProdutoImpl produtoImpl;
 
 
-    @ApiOperation(value = "Endpoint para criar um produto",
-        response = ProdutoEntity.class)
+    @Operation(summary = "Adiciona um novo produto")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "SUCESSO"),
-            @ApiResponse(code = 400, message = "Produto não inserido corretamente"),
-            @ApiResponse(code = 404, message = "Erro ao criar um produto")
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Lista de produtos não encontrada"),
+            @ApiResponse(responseCode = "404", description = "Erro ao buscar lista de produtos"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar a ação - (Internal Error)"),
     })
-    @RequestMapping(path = "/criar-produto", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public ResponseEntity<ProdutoEntity> criarProduto (
             @RequestBody ProdutoEntity produtoEntity
     ) {
         return ResponseEntity.ok(produtoImpl.criarProduto(produtoEntity));
     }
 
-
-    @ApiOperation(value = "Endpoint para listar todos os produtos presentes",
-            response = ProdutoEntity.class)
+    @Operation(summary = "Lista todos os produtos")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "SUCESSO"),
-            @ApiResponse(code = 400, message = "Lista de produtos não encontrada"),
-            @ApiResponse(code = 404, message = "Erro ao buscar lista de produtos")
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Lista de produtos não encontrada"),
+            @ApiResponse(responseCode = "404", description = "Erro ao buscar lista de produtos"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar a ação - (Internal Error)"),
     })
-    @RequestMapping(path = "/lista-produtos", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/lista-produtos")
     public ResponseEntity<List<ProdutoEntity>> listaProdutos() {
         return ResponseEntity.ok(produtoImpl.getProdutos());
     }
 
 
-    @ApiOperation(value = "Endpoint para listar um produto específico",
-            response = ProdutoEntity.class)
+    @Operation(summary = "Lista produto pelo id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "SUCESSO"),
-            @ApiResponse(code = 400, message = "Id do produto não buscado corretamente"),
-            @ApiResponse(code = 404, message = "Erro ao buscar o produto pelo seu id")
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Lista de produtos não encontrada"),
+            @ApiResponse(responseCode = "404", description = "Erro ao buscar lista de produtos"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar a ação - (Internal Error)"),
     })
-    @RequestMapping(path = "/lista-produto/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/lista-produto/{id}")
     public ResponseEntity<ProdutoEntity> getProdutoId (
-            @PathVariable(name = "id") String id
+            @PathVariable(name = "id") Long id
     ) {
         Optional<ProdutoEntity> produtoId = produtoImpl.getProdutoId(id);
         if (produtoId.isPresent()) {
@@ -68,33 +72,34 @@ public class ProdutoController {
     }
 
 
-    @ApiOperation(value = "Endpoint para atualizar um produto específico",
-            response = ProdutoEntity.class)
+    @Operation(summary = "Atualiza produto pelo id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "SUCESSO"),
-            @ApiResponse(code = 400, message = "Id do produto não foi atualizado corretamente"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar o produto")
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Lista de produtos não encontrada"),
+            @ApiResponse(responseCode = "404", description = "Erro ao buscar lista de produtos"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar a ação - (Internal Error)"),
     })
-    @RequestMapping(path = "/atualiza-produto/{id}", method = RequestMethod.PUT)
+    @PutMapping("/atualiza-produto/{id}")
     public ResponseEntity<?> atualizaProduto (
-            @PathVariable (name = "id") String id,
+            @PathVariable (name = "id") Long id,
             @RequestBody ProdutoEntity produtoEntity
     ) {
         produtoImpl.atualizaProduto(id, produtoEntity);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-    @ApiOperation(value = "Endpoint para deletar um produto específico",
-            response = ProdutoEntity.class)
+    @Operation(summary = "Delete produto pelo id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "SUCESSO"),
-            @ApiResponse(code = 400, message = "Id do produto não foi deletado"),
-            @ApiResponse(code = 404, message = "Erro ao deletar o produto")
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Lista de produtos não encontrada"),
+            @ApiResponse(responseCode = "404", description = "Erro ao buscar lista de produtos"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar a ação - (Internal Error)"),
     })
-    @RequestMapping(path = "/deleta-produto/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping("/deleta-produto/{id}")
     public ResponseEntity<?> produtoIdDeletado (
-            @PathVariable(name = "id") String id
+            @PathVariable(name = "id") Long id
     ) {
         produtoImpl.produtoIdDeletado(id);
         return new ResponseEntity<>(HttpStatus.OK);

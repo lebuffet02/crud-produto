@@ -1,12 +1,13 @@
-package com.example.project.crud.api.db.entity;
+package com.example.project.crud.entity;
 
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity(name = "produtos")
@@ -16,10 +17,8 @@ import java.io.Serializable;
 public class ProdutoEntity implements Serializable {
 
     @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-
     private String nome;
     private String descricao;
     private double preco;
