@@ -1,4 +1,4 @@
-package com.example.project.crud.entity;
+package com.example.project.crud.api.entity;
 
 
 import jakarta.persistence.Entity;

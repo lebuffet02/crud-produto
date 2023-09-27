@@ -8,8 +8,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @EnableWebMvc
-@EntityScan(basePackages = "com.example.project.crud.entity")
-@EnableJpaRepositories(basePackages = "com.example.project.crud.repository")
+@EntityScan(basePackages = "com.example.project.crud.api.entity")
+@EnableJpaRepositories(basePackages = "com.example.project.crud.api.repository")
 public class Application {
 
 	public static void main(String[] args) {

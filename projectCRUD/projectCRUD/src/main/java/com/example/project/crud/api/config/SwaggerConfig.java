@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,6 +18,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
                 email = "lebuffet02@gmail.com"
         ),
         license = @License(
-                name = "Apache 2.0"))
+                name = "Apache 2.0")),
+        security = {
+                @SecurityRequirement(
+                        name = "accessToken"
+                )
+        }
 )
 public class SwaggerConfig implements WebMvcConfigurer {}

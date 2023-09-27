@@ -1,6 +1,6 @@
 package com.example.project.crud.api.service;
 
-import com.example.project.crud.entity.ProdutoEntity;
+import com.example.project.crud.api.entity.ProdutoEntity;
 
 import java.util.List;
 import java.util.Optional;

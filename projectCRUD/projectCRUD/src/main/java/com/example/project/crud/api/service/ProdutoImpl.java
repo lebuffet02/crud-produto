@@ -1,8 +1,8 @@
 package com.example.project.crud.api.service;
 
 import com.example.project.crud.api.exceptions.ProdutoException;
-import com.example.project.crud.entity.ProdutoEntity;
-import com.example.project.crud.repository.ProdutoRepository;
+import com.example.project.crud.api.entity.ProdutoEntity;
+import com.example.project.crud.api.repository.ProdutoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
