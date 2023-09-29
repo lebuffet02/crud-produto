@@ -14,10 +14,11 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+/idea
 *.iws
 *.iml
 *.ipr
+/mvn
 
 ### NetBeans ###
 /nbproject/private/
@@ -31,3 +32,6 @@ build/
 
 ### VS Code ###
 .vscode/
+/crud-produtos/.mvn/
+/.idea/
+/projectCRUD/
