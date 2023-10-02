@@ -3,8 +3,9 @@ package com.example.project.crud.api.controller;
 import com.example.project.crud.api.documentation.DocInterface;
 import com.example.project.crud.api.entity.ProdutoEntity;
 import com.example.project.crud.api.service.ProdutoImpl;
-import com.example.project.crud.external.ResponseExternal;
+import com.example.project.crud.api.external.ResponseExternal;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class ProdutoController implements DocInterface {
 
     @PostMapping
     public ResponseExternal<ProdutoEntity> criarProduto (
-            @RequestBody ProdutoEntity produtoEntity) {
+            @RequestBody @Valid ProdutoEntity produtoEntity) {
         return new ResponseExternal<>(produtoImpl.criarProduto(produtoEntity));
     }
 

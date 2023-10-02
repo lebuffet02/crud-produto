@@ -1,4 +1,4 @@
-package com.example.project.crud.external;
+package com.example.project.crud.api.external;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

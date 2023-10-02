@@ -1,4 +1,4 @@
-package com.example.project.crud.external;
+package com.example.project.crud.api.external;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
