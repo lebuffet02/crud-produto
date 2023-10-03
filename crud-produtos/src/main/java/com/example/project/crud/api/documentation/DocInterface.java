@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
@@ -37,7 +39,7 @@ public interface DocInterface {
             @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
             @ApiResponse(responseCode = "500", description = "Erro ao realizar a ação - (Internal Error)"),
     })
-    ResponseExternal<List<ProdutoEntity>> listaProdutos();
+    ResponseExternal<Page<ProdutoEntity>> listaProdutos(Pageable pageable);
 
 
     @Operation(summary = "Lista produto pelo id",

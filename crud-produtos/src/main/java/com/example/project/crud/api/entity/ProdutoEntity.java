@@ -1,6 +1,7 @@
 package com.example.project.crud.api.entity;
 
 
+import com.example.project.crud.api.constants.StatusProduto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -14,7 +15,6 @@ import java.io.Serializable;
 @Table(name = "produtos")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class ProdutoEntity implements Serializable {
 
@@ -34,6 +34,10 @@ public class ProdutoEntity implements Serializable {
     @NotBlank
     @Positive
     private double preco;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private StatusProduto statusProduto;
 }
 
 

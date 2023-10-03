@@ -7,9 +7,11 @@ import com.example.project.crud.api.external.ResponseExternal;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -22,8 +24,9 @@ public class ProdutoController implements DocInterface {
 
 
     @GetMapping
-    public ResponseExternal<List<ProdutoEntity>> listaProdutos() {
-        return new ResponseExternal<>(produtoImpl.getProdutos());
+    public ResponseExternal<Page<ProdutoEntity>> listaProdutos(
+            @PageableDefault Pageable pageable) {
+        return new ResponseExternal<>(produtoImpl.getProdutos(pageable));
     }
 
     @PostMapping
@@ -32,14 +35,14 @@ public class ProdutoController implements DocInterface {
         return new ResponseExternal<>(produtoImpl.criarProduto(produtoEntity));
     }
 
-    @GetMapping("/lista-produto/{id}")
+    @GetMapping("/lista/{id}")
     public ResponseExternal<ProdutoEntity> getProdutoId (
             @PathVariable("id") Long id) {
         Optional<ProdutoEntity> produtoId = produtoImpl.getProdutoId(id);
         return produtoId.map(ResponseExternal::new).orElseGet(ResponseExternal::new);
     }
 
-    @PutMapping("/atualiza-produto/{id}")
+    @PutMapping("/atualiza/{id}")
     public ResponseExternal<?> atualizaProduto (
             @PathVariable ("id") Long id,
             @RequestBody ProdutoEntity produtoEntity) {
@@ -47,7 +50,7 @@ public class ProdutoController implements DocInterface {
         return new ResponseExternal<>();
     }
 
-    @DeleteMapping("/deleta-produto/{id}")
+    @DeleteMapping("/deleta/{id}")
     public ResponseExternal<?> produtoIdDeletado (
             @PathVariable("id") Long id) {
         produtoImpl.produtoIdDeletado(id);
