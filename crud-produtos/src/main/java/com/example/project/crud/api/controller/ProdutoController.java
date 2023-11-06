@@ -1,11 +1,12 @@
 package com.example.project.crud.api.controller;
 
 import com.example.project.crud.api.documentation.DocInterface;
-import com.example.project.crud.api.entity.ProdutoEntity;
+import com.example.project.crud.api.record.ProdutoDto;
 import com.example.project.crud.api.service.ProdutoImpl;
 import com.example.project.crud.api.external.ResponseExternal;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,38 +23,41 @@ public class ProdutoController implements DocInterface {
     @Autowired
     ProdutoImpl produtoImpl;
 
-
     @GetMapping
-    public ResponseExternal<Page<ProdutoEntity>> listaProdutos(
+    public ResponseExternal<Page<ProdutoDto>> listaProdutos(
             @PageableDefault Pageable pageable) {
         return new ResponseExternal<>(produtoImpl.getProdutos(pageable));
     }
 
     @PostMapping
-    public ResponseExternal<ProdutoEntity> criarProduto (
-            @RequestBody @Valid ProdutoEntity produtoEntity) {
-        return new ResponseExternal<>(produtoImpl.criarProduto(produtoEntity));
+    public ResponseExternal<Optional<ProdutoDto>> criarProduto (
+            @RequestBody @Valid ProdutoDto produtoDto) {
+        return new ResponseExternal<>(produtoImpl.criarProduto(produtoDto));
     }
 
-    @GetMapping("/lista/{id}")
-    public ResponseExternal<ProdutoEntity> getProdutoId (
-            @PathVariable("id") Long id) {
-        Optional<ProdutoEntity> produtoId = produtoImpl.getProdutoId(id);
-        return produtoId.map(ResponseExternal::new).orElseGet(ResponseExternal::new);
+    @GetMapping("/{id}")
+    public ResponseExternal<Optional<ProdutoDto>> getProdutoId (
+            @PathVariable("id") @NonNull Long id) {
+        return new ResponseExternal<>(produtoImpl.getProdutoId(id));
     }
 
-    @PutMapping("/atualiza/{id}")
-    public ResponseExternal<?> atualizaProduto (
-            @PathVariable ("id") Long id,
-            @RequestBody ProdutoEntity produtoEntity) {
-        produtoImpl.atualizaProduto(id, produtoEntity);
+    @PutMapping("/{id}")
+    public ResponseExternal<Optional<ProdutoDto>> atualizaProduto (
+            @PathVariable ("id") @NonNull Long id,
+            @RequestBody @Valid ProdutoDto produtoDto) {
+        return new ResponseExternal<>(produtoImpl.atualizarProduto(id, produtoDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseExternal<?> produtoIdDeletado (
+            @PathVariable("id") @NonNull Long id) {
+        produtoImpl.produtoIdDeletado(id);
         return new ResponseExternal<>();
     }
 
-    @DeleteMapping("/deleta/{id}")
-    public ResponseExternal<?> produtoIdDeletado (
-            @PathVariable("id") Long id) {
-        produtoImpl.produtoIdDeletado(id);
+    @DeleteMapping
+    public ResponseExternal<?> deletarTodos() {
+        produtoImpl.deletarTodos();
         return new ResponseExternal<>();
     }
 }

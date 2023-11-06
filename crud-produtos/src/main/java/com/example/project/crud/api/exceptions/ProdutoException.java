@@ -1,16 +1,6 @@
 package com.example.project.crud.api.exceptions;
 
-public class ProdutoException extends RuntimeException {
+import lombok.experimental.StandardException;
 
-    public ProdutoException() {
-        super();
-    }
-
-    public ProdutoException(String mensagem) {
-        super(mensagem);
-    }
-
-    public ProdutoException(String mensagem, Throwable ex) {
-        super(mensagem, ex);
-    }
-}
+@StandardException
+public class ProdutoException extends RuntimeException {}

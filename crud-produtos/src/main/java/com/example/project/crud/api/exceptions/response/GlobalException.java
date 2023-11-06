@@ -27,9 +27,9 @@ public class GlobalException extends ResponseEntityExceptionHandler {
 
     private Map<String, Object> getMap(String e) {
         Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", TimeUtils.formatDate(new Date()));
-        body.put("status", HttpStatus.BAD_REQUEST.value());
-        body.put("message", e);
+        body.put("Momento: ", TimeUtils.formatDate(new Date()));
+        body.put("Status: ", HttpStatus.BAD_REQUEST.value());
+        body.put("Mensagem: ", e);
         return body;
     }
 }

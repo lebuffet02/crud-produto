@@ -1,7 +1,7 @@
 package com.example.project.crud.api.documentation;
 
-import com.example.project.crud.api.entity.ProdutoEntity;
 import com.example.project.crud.api.external.ResponseExternal;
+import com.example.project.crud.api.record.ProdutoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import java.util.List;
+import java.util.Optional;
 
 public interface DocInterface {
 
@@ -26,7 +26,7 @@ public interface DocInterface {
             @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
             @ApiResponse(responseCode = "500", description = "Erro ao realizar a ação - (Internal Error)"),
     })
-    ResponseExternal<ProdutoEntity> criarProduto (@RequestBody ProdutoEntity produtoEntity);
+    ResponseExternal<Optional<ProdutoDto>> criarProduto (@RequestBody ProdutoDto produtoDto);
 
     @Operation(summary = "Lista todos os produtos",
             security = {
@@ -39,7 +39,7 @@ public interface DocInterface {
             @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
             @ApiResponse(responseCode = "500", description = "Erro ao realizar a ação - (Internal Error)"),
     })
-    ResponseExternal<Page<ProdutoEntity>> listaProdutos(Pageable pageable);
+    ResponseExternal<Page<ProdutoDto>> listaProdutos(Pageable pageable);
 
 
     @Operation(summary = "Lista produto pelo id",
@@ -53,7 +53,7 @@ public interface DocInterface {
             @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
             @ApiResponse(responseCode = "500", description = "Erro ao realizar a ação - (Internal Error)"),
     })
-    ResponseExternal<ProdutoEntity> getProdutoId (@PathVariable(name = "id") Long id);
+    ResponseExternal<Optional<ProdutoDto>> getProdutoId (@PathVariable(name = "id") Long id);
 
 
     @Operation(summary = "Atualiza produto pelo id",
@@ -67,7 +67,7 @@ public interface DocInterface {
             @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
             @ApiResponse(responseCode = "500", description = "Erro ao realizar a ação - (Internal Error)"),
     })
-    ResponseExternal<?> atualizaProduto (@PathVariable (name = "id") Long id, @RequestBody ProdutoEntity produtoEntity);
+    ResponseExternal<?> atualizaProduto (@PathVariable (name = "id") Long id, @RequestBody ProdutoDto produtoDto);
 
 
     @Operation(summary = "Delete produto pelo id",
